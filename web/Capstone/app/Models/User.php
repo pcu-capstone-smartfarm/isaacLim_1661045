@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -29,5 +28,10 @@ class User extends Authenticatable
     public function setPasswordAttribute($password) //비밀번호 암호화
     {
         $this->attributes['password'] = Hash::make($password);
+    }
+
+    public function arduinos()
+    {
+        return $this->hasMany('App\Models\Arduino');
     }
 }
