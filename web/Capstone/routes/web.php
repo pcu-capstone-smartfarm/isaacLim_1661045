@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\ArduinoController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionsController;
+use App\Models\Arduino;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // 홈페이지
@@ -29,13 +33,30 @@ Route::middleware('auth')->group(function () {
         // 로그아웃
         Route::post('/Logout', [SessionsController::class, 'logout'])->name('logout');
 
+        //사용자 정보 수정 페이지
         Route::get('/userEdit', [SessionsController::class, 'edit'])->name('userEdit');
         Route::patch('/userUpdate', [SessionsController::class, 'update'])->name('userUpdate');
 
+        //회원 탈퇴 페이지
         Route::get('/userDelete', [SessionsController::class, 'userDeleteNotice'])->name('userDeleteNotice');
+
+        Route::prefix('Plant/{plantID}')->group(function(){
+            Route::prefix('Reports')->group(function(){
+                Route::get('/humidity', [ReportsController::class, 'humidityReports']);
+            });
+        });
+
+        //라우트 인자값으로 판별하여 다른값호출하도록 설정
+        //센서값 그래프 페이지(토양 습도, 습도, 조도, 온도)
+        Route::prefix('reports')->group(function(){
+            Route::get('/humidity_soil', [ReportsController::class, 'humiditySoilReports'])->name('reports_humidity_soil');
+            Route::get('/humidity', [ReportsController::class, 'humidityReports'])->name('reports_humidity');
+            Route::get('/illuminance', [ReportsController::class, 'illuminanceReports'])->name('reports_illuminance');
+            Route::get('/temp', [ReportsController::class, 'tempReports'])->name('reports_temp');
+        });
     });
 });
 
 Route::get('/test', function () {
-    return view('components.test');
+    return view('index');
 });
