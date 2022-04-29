@@ -18,12 +18,12 @@ class SessionsController extends Controller
     //login 입력 내용으로 DB 비교하여 검증
     public function store(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email|max:255',
             'password' => 'required|max:255'
         ]);
 
-        if (! auth()->attempt($request->only(['email', 'password']))) {
+        if (! auth()->attempt($credentials)) {
             throw ValidationException::withMessages([
                 'email' => '사용자 정보가 올바르지 않습니다.'
             ]);

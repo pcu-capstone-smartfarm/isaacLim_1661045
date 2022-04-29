@@ -28,7 +28,11 @@ class PostController extends Controller
         $request->merge(['userID'=> $userID])->validate([
             'userID' => 'required|numeric'
         ]);
+        $users = User::find($userID);
+        $arduinos = $users->arduinos()->latest()->take(1)->first();
 
-        return view('components.homePage');
+        return view('components.homepage-arduino', [
+            'arduinos'=>$arduinos
+        ]);
     }
 }
