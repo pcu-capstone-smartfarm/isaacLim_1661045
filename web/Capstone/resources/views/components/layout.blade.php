@@ -1,10 +1,11 @@
 <!DOCTYPE html lang="ko">
 <head><meta name="viewport" content="width=device-width, initial-scale=1"></head>
-<title>TODO LIST</title>
-<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+<title>CAPSTONE</title>
+<link href="/css/app.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     function sleep(ms) {
@@ -20,6 +21,7 @@
         document.getElementById("sliderOverlay").className="hidden";
     }
 </script>
+
 <style>
     html{
         scroll-behavior: smooth;
@@ -46,7 +48,7 @@
                             <a href="{{route('home')}}">
                         @endauth
                         <span class="sr-only">Workflow</span>
-                        <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="">
+                        <svg viewBox="0 0 15 15" fill="#3ADF00" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M7.5 15V7m0 .5v3m0-3a4 4 0 00-4-4h-3v3a4 4 0 004 4h3m0-3h3a4 4 0 004-4v-3h-3a4 4 0 00-4 4v3zm0 0l4-4m-4 7l-4-4" stroke="currentColor"></path></svg>
                         </a>
                     </div>
                     <div class="-mr-2 -my-2 md:hidden">
@@ -65,15 +67,12 @@
                         </div>
 
                         @auth
-                            <a href="{{route('userHome', ['userID'=>auth()->user()->id])}}" dusk="posts-all" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            항목1
-                        </a>
                         <x-category-dropdown dusk="posts-dropdown"/>
                         <a class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            항목2
+                            사전
                         </a>
                         <a class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            항목3
+                            일지
                         </a>
                         @endauth
                     </nav>
@@ -127,10 +126,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-                                    <span class="flex-1 ml-3 whitespace-nowrap">사용자 정보</span>
-                                </a>
+                                <div>
+                                    <x-category-dropdown dusk="posts-dropdown" class="py-3"/>
+                                </div>
                             </li>
                             <li>
                                 <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -140,6 +138,12 @@
                             </li>
                             @auth
                             <li>
+                                <a href="{{route('userEdit', ['userID'=>auth()->user()->id])}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                                    <span class="flex-1 ml-3 whitespace-nowrap">사용자 정보 수정</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" @click.prevent="document.querySelector('#mobile-logout-form').submit()" x-data={}>
                                     <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
                                     <span class="flex-1 ml-3 whitespace-nowrap">로그아웃</span>
@@ -147,6 +151,12 @@
                                 <form id="mobile-logout-form" method="POST" action="{{route('logout', ['userID'=>auth()->user()->id])}}" class="hidden">
                                     @csrf
                                 </form>
+                            </li>
+                            <li>
+                                <a href="{{route('userDeleteNotice', ['userID'=>auth()->user()->id])}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 1.5l12 12m-12 0l12-12" stroke="currentColor"></path></svg>
+                                    <span class="flex-1 ml-3 whitespace-nowrap">회원 탈퇴</span>
+                                </a>
                             </li>
                             @else
                             <li>
@@ -169,5 +179,5 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
 </body>

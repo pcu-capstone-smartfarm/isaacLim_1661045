@@ -11,6 +11,11 @@
                 <x-form.input dusk="loginPage-login-form-password-input" name="password" type="password" autocomplete="new-password"/>
 
                 <x-form.button>Log In</x-form.button>
+                <div class="mt-4">
+                    <a dusk="registerPage-register-form-cancle-anchor" href="{{route('register')}}" class="bg-gray-400 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-gray-500 ">
+                        REGISTER
+                    </a>
+                </div>
             </form>
         </x-panel>
     </main>
