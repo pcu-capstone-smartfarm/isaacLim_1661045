@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Arduino;
+use App\Models\Plant;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,6 +27,7 @@ class ArduinoFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
+            'plant_id' => Plant::factory(),
             'humidity' => rand(0, 100),
             'temp' => rand(0, 100),
             'humidity_soil' => rand(0, 100),
