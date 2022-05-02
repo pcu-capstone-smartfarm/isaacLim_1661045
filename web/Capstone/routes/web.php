@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArduinoController;
+use App\Http\Controllers\PlantsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportsController;
@@ -40,11 +41,8 @@ Route::middleware('auth')->group(function () {
         //회원 탈퇴 페이지
         Route::get('/userDelete', [SessionsController::class, 'userDeleteNotice'])->name('userDeleteNotice');
 
-        Route::prefix('Plant/{plantID}')->group(function(){
-            Route::prefix('Reports')->group(function(){
-                Route::get('/humidity', [ReportsController::class, 'humidityReports']);
-            });
-        });
+        //최초 가입 시 식물 등록
+        Route::get('/userVerification', [PlantsController::class, 'plantRegister'])->name('plantRegister');
 
         //라우트 인자값으로 판별하여 다른값호출하도록 설정
         //센서값 그래프 페이지(토양 습도, 습도, 조도, 온도)
