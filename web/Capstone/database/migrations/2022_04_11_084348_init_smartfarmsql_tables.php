@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestampsTz();
             $table->softDeletesTz();
@@ -48,19 +49,45 @@ return new class extends Migration
             $table->index('deleted_at');
         });
 
+        //농사로 API (실내정원용 식물 목록) 테이블
+        Schema::create('nongsaro_gardenlists', function (Blueprint $table){
+            $table->id();
+            $table->unsignedBigInteger('cntntsNo');
+            $table->string('cntntsSj');
+            $table->string('rtnFileSeCode');
+            $table->string('rtnFileSn');
+            $table->string('rtnOrginlFileNm', 500);
+            $table->string('rtnStreFileNm', 500);
+            $table->string('rtnFileCours');
+            $table->string('rtnImageDc');
+            $table->string('rtnThumbFileNm', 500);
+            $table->string('rtnImgSeCode');
+            $table->timestampsTz();
+            $table->softDeletesTz();
+
+            $table->index('cntntsNo');
+            $table->index('cntntsSj');
+            $table->index('rtnFileCours');
+            $table->index('rtnStreFileNm');
+            $table->index('rtnThumbFileNm');
+            $table->index('created_at');
+            $table->index('deleted_at');
+        });
+
         //식물 정보 테이블(plants)
         Schema::create('plants', function (Blueprint $table){
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('serial_id');
             $table->string('plantname');
-            $table->string('crops_code');
+            $table->unsignedBigInteger('nongsaro_gardenlist_id');
             $table->timestampTz('device_verification_at')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('serial_id')->references('id')->on('serials')->onDelete('cascade');
+            $table->foreign('nongsaro_gardenlist_id')->references('id')->on('nongsaro_gardenlists')->onDelete('cascade');
 
             $table->index('plantname');
             $table->index('created_at');
@@ -90,6 +117,20 @@ return new class extends Migration
             $table->index('deleted_at');
         });
 
+        Schema::create('Files', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('filesize');
+            $table->string('path');
+            $table->string('filename');
+            $table->string('originalname');
+            $table->string('type');
+            $table->timestampsTz();
+            $table->softDeletesTz();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
         //사용자 토큰값 테이블(personal_access_tokens)
         // DB::statement('CREATE DATABASE IF NOT EXISTS `personal_access_tokens`');
         // Schema::create('personal_access_tokens', function (Blueprint $table) {
@@ -110,8 +151,10 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('Files');
         Schema::dropIfExists('plants');
         Schema::dropIfExists('arduinos');
+        Schema::dropIfExists('nongsaro_gardenlists');
         Schema::dropIfExists('serials');
         Schema::dropIfExists('users');
         // Schema::dropIfExists('personal_access_tokens');
