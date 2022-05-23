@@ -7,7 +7,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionsController;
 use App\Models\Arduino;
+use App\Models\Nongsaro_gardenlist;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 // 홈페이지
@@ -42,7 +44,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/userDelete', [SessionsController::class, 'userDeleteNotice'])->name('userDeleteNotice');
 
         //최초 가입 시 식물 등록
-        Route::get('/userVerification', [PlantsController::class, 'plantRegister'])->name('plantRegister');
+        Route::get('/plantRegist', [PlantsController::class, 'plantRegisterPage'])->name('plantRegisterPage');
+        Route::post('/userVerification', [PlantsController::class, 'plantRegister'])->name('plantRegister');
+
+        //식물 도감 페이지
+        Route::get('/plantDict', [PlantsController::class, 'plantSearchPage'])->name('plantDict');
+
+        //식물 등록 후 아두이노 대기 페이지
+        Route::get('/arduinoRegist', [PostController::class, 'arduinoRegistPage'])->name('arduinoRegisterPage');
+
+        //아두이노 등록 후 센서 값 대기 페이지
+        Route::get('/sensorWait', [PostController::class, 'noSensorPage'])->name('noSensorHome');
 
         //라우트 인자값으로 판별하여 다른값호출하도록 설정
         //센서값 그래프 페이지(토양 습도, 습도, 조도, 온도)
@@ -56,5 +68,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/test', function () {
-    return view('index');
+    $consonant  = array('ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ');
+    return view('components.test', [
+        'consonant'=>$consonant,
+        'plantslist'=>DB::table('Nongsaro_gardenlists')->paginate(12),
+    ]);
 });

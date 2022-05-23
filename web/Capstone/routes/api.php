@@ -15,10 +15,15 @@ Route::prefix('User/{userID}/arduino')->group(function (){
     Route::post('/input', [ArduinoController::class, 'sensorInput']);
     Route::post('/logout', [ArduinoController::class, 'ArduinoLogout']);
     Route::post('/refresh', [ArduinoController::class, 'refresh']);
+    Route::post('/imgpush', [ArduinoController::class, 'imagePush']);
+    Route::get('/imgget', [ArduinoController::class, 'imageGet']);
 });
 
-Route::get('/apiToJson', [OpenApiController::class, 'getAPI']);
+Route::get('/apiToJson', [OpenApiController::class, 'getPlantName']);
 
 Route::get('/apiTest', function(){
     return response()->json(['success'=>'1'], 201);
 });
+
+Route::post('/serialCheck', [ArduinoController::class, 'serialCheck'])->name('serialCheck');
+
