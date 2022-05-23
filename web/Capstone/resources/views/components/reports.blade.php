@@ -1,21 +1,20 @@
 <x-layout/>
-<section class="px-6 py-8 flex md:items-center">
-    <main class="max-w-7xl mx-auto px-4 sm:px-6">
-        <form>
+<section class="px-6  sm:py-4 flex md:items-center">
+    <main class="mx-auto px-4 sm:px-6">
+        <form action="{{url()->current()}}">
             <div class="w-full">
                 <div class="bg-white divide-y divide-gray-200 shrink-0">
-                <div class="items-center flex md:inline-block">
+                <div class="flex justify-center">
                     <div class="md:py-4">
-                        <div class="flex items-center">
+                        <div class="">
                             <input type="date" name="start_day" class="rounded-full">
                         </div>
                     </div>
-                        <div class="px-3 md:py-4 content-center">
-                            <input type="submit" value="조회" class="px-3 py-2 md:h-max rounded-full bg-blue-500 text-sm text-white">
+                        <div class="px-3 md:py-4">
+                            <button class="px-3 py-2 md:h-max rounded-full bg-blue-500 text-sm text-white">조회</button>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </form>
         @if ($errors -> any())             {{-- 한번에 에러 출력 --}}
@@ -27,22 +26,28 @@
         @endif
     </main>
 </section>
-
-<div>
-    <div class="w-9/12 px-20">
-        <canvas id="myChart" width="400" height="400"/>
+@if(isset($arduinodatas))
+<section class="sm:px-6">
+    <div id="chart-container">
+        <canvas id="myChart"/>
     </div>
-</div>
+</section>
 
 <script>
     let timedata = [];
     let sensordata = [];
     let devicewith = window.innerWidth;
     let pointsize = 0;
-    if(devicewith>600)
+    if(devicewith>600){
         pointsize = 5;
-    else
+        document.getElementById('chart-container').style.width=window.innerWidth-100;
+        document.getElementById('chart-container').style.height=window.innerHeight-200;
+    }
+    else{
         pointsize = devicewith/100;
+        document.getElementById('chart-container').style.width=window.innerWidth-50;
+        document.getElementById('chart-container').style.height=window.innerHeight-100;
+    }
 
     @foreach ($arduinodatas as $data)
         timedata.push('{{$data->created_at->format('m-d g:i a')}}');
@@ -69,24 +74,29 @@
             }]
         },
         options: {
+            maintainAspectRatio:false,
             scales: {
                 y: {
                     beginAtZero: true
                 }
             },
-            layout: {
-                autoPadding : false
-            }
         }
     });
     window.onresize = function(event){
         devicewith = window.innerWidth;
-        if(devicewith>600)
+        if(devicewith>600){
             pointsize = 5;
-        else
+            document.getElementById('chart-container').style.width=window.innerWidth-100;
+            document.getElementById('chart-container').style.height=window.innerHeight-200;
+        }
+        else{
             pointsize = devicewith/100 - devicewith/100%1;
+            document.getElementById('chart-container').style.width=window.innerWidth-50;
+            document.getElementById('chart-container').style.height=window.innerHeight-100;
+        }
         console.log(pointsize);
         myChart.data.datasets.pointBorderWidth = pointsize;
     }
 </script>
 
+@endif

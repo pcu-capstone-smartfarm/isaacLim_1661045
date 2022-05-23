@@ -1,5 +1,7 @@
 <!DOCTYPE html lang="ko">
-<head><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 <title>CAPSTONE</title>
 <link href="/css/app.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -13,12 +15,18 @@
     }
     async function openSlider(){
         document.getElementById("sliderOverlay").className="ease-in duration-500 opacity-100"
+        mainFrame =  document.getElementById("mainFrame");
+        if(mainFrame != null)
+            mainFrame.className="hidden";
         await sleep(500);
     }
     async function closeSlider(){
         document.getElementById("sliderOverlay").className="duration-500 ease-in-out opacity-0";
+        mainFrame = document.getElementById("mainFrame");
         await sleep(500);
         document.getElementById("sliderOverlay").className="hidden";
+        if(mainFrame != null)
+            mainFrame.className="";
     }
 </script>
 
@@ -68,7 +76,7 @@
 
                         @auth
                         <x-category-dropdown dusk="posts-dropdown"/>
-                        <a class="text-base font-medium text-gray-500 hover:text-gray-900">
+                        <a class="text-base font-medium text-gray-500 hover:text-gray-900" href="{{route('plantDict', ['userID'=>auth()->user()->id])}}" target="blank">
                             사전
                         </a>
                         <a class="text-base font-medium text-gray-500 hover:text-gray-900">
