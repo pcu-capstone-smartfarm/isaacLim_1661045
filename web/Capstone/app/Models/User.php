@@ -15,7 +15,7 @@ class User extends Authenticatable implements JWTSubject
     use HasFactory;
     use Notifiable;
 
-    protected $fillable = ['name','username','email','password'];
+    protected $fillable = ['name','nickname','email','password'];
 
     protected $hidden = [
         'password',
@@ -49,5 +49,10 @@ class User extends Authenticatable implements JWTSubject
     public function plants()
     {
         return $this->hasMany('App\Models\Plant');
+    }
+
+    public function files()
+    {
+        return $this->hasMany('App\Models\File');
     }
 }
