@@ -19,13 +19,13 @@ class RegisterController extends Controller
     {
         $request->validate([
             'name'=>'required|max:255',
-            'username'=>['required','min:3','max:255',Rule::unique('users', 'username')],
+            'nickname'=>['required','min:3','max:255',Rule::unique('users', 'nickname')],
             'email'=>'required|email|max:255|unique:users,email',
             'password'=>'required|min:6|max:255'
         ]);
         $user = new User([
             'name'=>$request->input('name'),
-            'username'=>$request->input('username'),
+            'nickname'=>$request->input('nickname'),
             'email'=>$request->input('email'),
             'password'=>$request->input('password')
         ]);

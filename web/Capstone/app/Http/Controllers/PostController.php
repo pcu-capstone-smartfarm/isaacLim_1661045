@@ -32,11 +32,40 @@ class PostController extends Controller
         ]);
         $users = User::find($userID);
         $arduinos = $users->arduinos()->latest()->take(1)->first();
+        $userPlant = $users->plants()->first();
+        if(!isset($arduinos)){
+            if(!isset($userPlant)){
+                return redirect()->route('plantRegisterPage', ['userID'=>auth()->user()->id]);
+            }
+            else{
+                if($userPlant->device_verification_at == null){
+                    return redirect()->route('arduinoRegisterPage', ['userID'=>auth()->user()->id]);
+                }
+                else
+                    return redirect()->route('noSensorHome', ['userID'=>auth()->user()->id]);
+            }
+        }
 
         return view('components.homepage-arduino', [
             'arduinos'=>$arduinos
         ]);
     }
 
+    public function arduinoRegistPage($userID)
+    {
+        $users = User::find($userID);
+        if($users->plants()->first()->device_verification_at == null)
+            return view('components.arduinoRegisterPage');
+        else
+            return redirect()->route('userHome', ['userID'=>auth()->user()->id]);
+    }
 
+    public function noSensorPage($userID)
+    {
+        $users = User::find($userID);
+        if($users->arduinos()->first()==null)
+            return view('components.noSensorPage');
+        else
+            return redirect()->route('userHome', ['userID'=>auth()->user()->id]);
+    }
 }

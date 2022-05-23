@@ -29,7 +29,7 @@ class SessionsController extends Controller
             ]);
         }
         // session()->regenerate();
-        return redirect()->route('userHome', ['userID'=>auth()->user()->id])->with('success', '로그인 성공!');
+        return redirect()->route('home', ['userID'=>auth()->user()->id])->with('success', '로그인 성공!');
     }
 
     //페이지 정보로 로그아웃

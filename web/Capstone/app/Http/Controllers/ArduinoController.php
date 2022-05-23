@@ -6,14 +6,18 @@ use App\Models\Arduino;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\Serial;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ArduinoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'serialRegist']]);
+        $this->middleware('auth:api', ['except' => ['login', 'serialRegist', 'serialCheck', 'imgtest']]);
     }
 
     /**
@@ -464,6 +468,65 @@ class ArduinoController extends Controller
         $plant->device_verification_at = now();
         $plant->save();
         return response()->json(['success'=>'등록 완료', 'userID'=>$plant->user_id], 201);
+    }
+
+    public function serialCheck(Request $request)
+    {
+        $request->validate([
+            'serial_no' => 'required|string|max:100'
+        ]);
+        $serial = Serial::where('code', $request->serial_no)->first();
+        if($serial==null)
+        {
+            return response()->json(['fail' => 'serial_no 불일치'], 403);
+        }
+        return $serial->id;
+    }
+
+    public function imagePush(Request $fileRequest, $userID)
+    {
+        $fileRequest->merge(['userID'=>$userID])->validate([
+            'image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'userID'=>'required|numeric',
+            'token'=>'required|string'
+        ]);
+        if($fileRequest->hasFile('image')){
+            $file = $fileRequest->file('image', FILEINFO_MIME_TYPE);
+            $name = time().$file->getClientOriginalName();
+            $filepath = '/arduinoImage/'.base64_encode(User::find($userID)->nickname).'/'.$name;
+            Storage::disk('s3')->put($filepath,file_get_contents($file));
+            $modlfile = new File;
+            $modlfile->user_id = $userID;
+            $modlfile->filesize = $file->getSize();
+            $modlfile->path = $filepath;
+            $modlfile->filename = $name;
+            $modlfile->originalname = $file->getClientOriginalName();
+            $modlfile->type = image_type_to_mime_type(exif_imagetype($file));
+            $modlfile->save();
+        }
+        else{
+            return response()->json(['fail' => '이미지 파일 없음'], 403);
+        }
+
+        return response()->json(['success'=>'image Upload Complete']);
+    }
+
+    public function imageGet(Request $request, $userID)
+    {
+        if(User::find($userID)->is_admin != true)
+        {
+            return response()->json(['fail'=>'권한 없음'], 403);
+        }
+        $request->merge(['userID'=>$userID])->validate([
+            'userID'=>'required|numeric',
+            'token'=>'required|string'
+        ]);
+        $file = File::whereDate('created_at', Carbon::today())->get();
+        $today_data = [];
+        foreach ($file as $data) {
+            $today_data[] = $data;
+        }
+        return response()->json($today_data, 201);
     }
 
     protected function respondWithToken($token)

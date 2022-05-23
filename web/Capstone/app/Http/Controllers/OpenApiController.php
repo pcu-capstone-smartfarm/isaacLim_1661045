@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class OpenApiController extends Controller
 {
-    public function getAPI()
+    public function getPlantName()
     {
         $response = Http::get('http://api.nongsaro.go.kr/service/garden/gardenList',[
             'apiKey'=>env("NONGSARO_API_KEY"),

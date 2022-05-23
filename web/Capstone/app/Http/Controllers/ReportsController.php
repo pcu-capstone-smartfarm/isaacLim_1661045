@@ -15,13 +15,22 @@ class ReportsController extends Controller
         }
 
         $request->merge(['userID'=>$userID])->validate([
-            'userID' => 'required|numeric'
+            'userID' => 'required|numeric',
+            'start_day' => 'nullable|date'
         ]);
-
-        $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'humidity')->latest()->take(10)->get()->reverse();
 
         //파란색 그래프 선
         $colorArray = [000, 204, 255, 1];
+
+        if($request->start_day == null)
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'humidity')->latest()->take(10)->get();
+        else{
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'humidity')->whereDate('created_at', date('Y-m-d', strtotime($request->start_day)))->get();
+        }
+        if($arduinodatas->first() == null){
+            return back()->withErrors('해당되는 데이터가 없습니다.');
+        }
+
         // db호출 1번만
         return view('components.reports', [
             'userID'=>$userID,
@@ -39,13 +48,21 @@ class ReportsController extends Controller
         }
 
         $request->merge(['userID'=>$userID])->validate([
-            'userID' => 'required|numeric'
+            'userID' => 'required|numeric',
+            'start_day' => 'nullable|date'
         ]);
 
         //빨간색 그래프 선
         $colorArray = [255, 000, 051, 1];
 
-        $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'temp')->latest()->take(10)->get();
+        if($request->start_day == null)
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'temp')->latest()->take(10)->get();
+        else{
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'temp')->whereDate('created_at', date('Y-m-d', strtotime($request->start_day)))->get();
+        }
+        if($arduinodatas->first() == null){
+            return back()->withErrors('해당되는 데이터가 없습니다.');
+        }
 
         return view('components.reports', [
             'userID'=>$userID,
@@ -63,13 +80,21 @@ class ReportsController extends Controller
         }
 
         $request->merge(['userID'=>$userID])->validate([
-            'userID' => 'required|numeric'
+            'userID' => 'required|numeric',
+            'start_day' => 'nullable|date'
         ]);
 
         //갈색 그래프 선
         $colorArray = [153, 051, 000, 1];
 
-        $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'humidity_soil')->latest()->take(10)->get()->reverse();
+        if($request->start_day == null)
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'humidity_soil')->latest()->take(10)->get();
+        else{
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'humidity_soil')->whereDate('created_at', date('Y-m-d', strtotime($request->start_day)))->get();
+        }
+        if($arduinodatas->first() == null){
+            return back()->withErrors('해당되는 데이터가 없습니다.');
+        }
 
         return view('components.reports', [
             'userID'=>$userID,
@@ -87,13 +112,21 @@ class ReportsController extends Controller
         }
 
         $request->merge(['userID'=>$userID])->validate([
-            'userID' => 'required|numeric'
+            'userID' => 'required|numeric',
+            'start_day' => 'nullable|date'
         ]);
 
         //갈색 그래프 선
         $colorArray = [255, 153, 051, 1];
 
-        $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'illuminance')->latest()->take(10)->get()->reverse();
+        if($request->start_day == null)
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'illuminance')->latest()->take(10)->get();
+        else{
+            $arduinodatas = User::find($userID)->arduinos()->select('created_at', 'illuminance')->whereDate('created_at', date('Y-m-d', strtotime($request->start_day)))->get();
+        }
+        if($arduinodatas->first() == null){
+            return back()->withErrors('해당되는 데이터가 없습니다.');
+        }
 
         return view('components.reports', [
             'userID'=>$userID,
