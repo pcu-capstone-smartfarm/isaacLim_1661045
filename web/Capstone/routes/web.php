@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionsController;
 use App\Models\Arduino;
+use App\Models\Nongsaro_gardendtl;
 use App\Models\Nongsaro_gardenlist;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +50,8 @@ Route::middleware('auth')->group(function () {
 
         //식물 도감 페이지
         Route::get('/plantDict', [PlantsController::class, 'plantSearchPage'])->name('plantDict');
+        Route::post('/plantSearch', [PlantsController::class, 'plantSearch'])->name('plantSearch');
+        Route::get('/plantDetail/{plantNO}', [PlantsController::class, 'plantDetail'])->name('plantDetail');
 
         //식물 등록 후 아두이노 대기 페이지
         Route::get('/arduinoRegist', [PostController::class, 'arduinoRegistPage'])->name('arduinoRegisterPage');
@@ -68,9 +71,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/test', function () {
-    $consonant  = array('ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ');
     return view('components.test', [
-        'consonant'=>$consonant,
-        'plantslist'=>DB::table('Nongsaro_gardenlists')->paginate(12),
+        'gardendtl'=>Nongsaro_gardendtl::find(3),
     ]);
 });

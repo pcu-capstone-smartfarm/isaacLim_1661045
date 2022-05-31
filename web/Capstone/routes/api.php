@@ -19,8 +19,6 @@ Route::prefix('User/{userID}/arduino')->group(function (){
     Route::get('/imgget', [ArduinoController::class, 'imageGet']);
 });
 
-Route::get('/apiToJson', [OpenApiController::class, 'getPlantName']);
-
 Route::get('/apiTest', function(){
     return response()->json(['success'=>'1'], 201);
 });
