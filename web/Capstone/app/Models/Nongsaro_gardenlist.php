@@ -15,4 +15,9 @@ class Nongsaro_gardenlist extends Model
     {
         return $this->hasMany('App\Models\Plant');
     }
+
+    public function gardendtl()
+    {
+        return $this->hasOne('App\Models\Nongsaro_gardendtl');
+    }
 }
