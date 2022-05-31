@@ -17,7 +17,7 @@ class Nongsaro_gardenlistSeeder extends Seeder
     public function run()
     {
         $api = new OpenApiController;
-        $json = json_decode($api->getPlantName());
+        $json = json_decode($api->getGardenList());
         foreach($json->item as $value){
             $nongsaro = new Nongsaro_gardenlist;
             $nongsaro->cntntsNo = $value->cntntsNo;

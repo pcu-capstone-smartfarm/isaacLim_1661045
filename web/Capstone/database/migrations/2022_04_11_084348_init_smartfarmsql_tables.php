@@ -74,6 +74,52 @@ return new class extends Migration
             $table->index('deleted_at');
         });
 
+        Schema::create('nongsaro_gardendtls', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('nongsaro_gardenlist_id');
+            $table->string('plntbneNm');
+            $table->string('plntzrNm');
+            $table->string('distbNm');
+            $table->string('fmlCodeNm');
+            $table->string('orgplceInfo');
+            $table->string('adviseInfo');
+            $table->string('growthHgInfo');
+            $table->string('growthAraInfo');
+            $table->string('lefStleInfo');
+            $table->string('prpgtEraInfo');
+            $table->string('managelevelCodeNm');
+            $table->string('grwtveCodeNm');
+            $table->string('grwhTpCodeNm');
+            $table->string('hdCodeNm');
+            $table->string('frtlzrInfo');
+            $table->string('soilInfo');
+            $table->string('watercycleSprngCodeNm');
+            $table->string('watercycleSummerCodeNm');
+            $table->string('watercycleAutumnCodeNm');
+            $table->string('watercycleWinterCodeNm');
+            $table->text('fncltyInfo');
+            $table->string('managedemanddoCodeNm');
+            $table->string('clCodeNm');
+            $table->string('grwhstleCodeNm');
+            $table->string('indoorpsncpacompositionCodeNm');
+            $table->string('eclgyCodeNm');
+            $table->string('lefmrkCodeNm');
+            $table->string('lefcolrCodeNm');
+            $table->string('ignSeasonCodeNm');
+            $table->string('flclrCodeNm');
+            $table->string('fmldecolrCodeNm');
+            $table->string('prpgtmthCodeNm');
+            $table->string('lighttdemanddoCodeNm');
+            $table->string('postngplaceCodeNm');
+            $table->string('dlthtsCodeNm');
+            $table->timestampsTz();
+            $table->softDeletesTz();
+
+            $table->foreign('nongsaro_gardenlist_id')->references('id')->on('nongsaro_gardenlists')->onDelete('cascade');
+            $table->index('created_at');
+            $table->index('deleted_at');
+        });
+
         //식물 정보 테이블(plants)
         Schema::create('plants', function (Blueprint $table){
             $table->id();
@@ -117,7 +163,7 @@ return new class extends Migration
             $table->index('deleted_at');
         });
 
-        Schema::create('Files', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('filesize');
@@ -154,6 +200,7 @@ return new class extends Migration
         Schema::dropIfExists('Files');
         Schema::dropIfExists('plants');
         Schema::dropIfExists('arduinos');
+        Schema::dropIfExists('nongsaro_gardendtls');
         Schema::dropIfExists('nongsaro_gardenlists');
         Schema::dropIfExists('serials');
         Schema::dropIfExists('users');
