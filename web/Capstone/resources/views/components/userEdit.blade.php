@@ -61,3 +61,4 @@
         </main>
     </section>
 <x-flash/>
+<x-footer/>

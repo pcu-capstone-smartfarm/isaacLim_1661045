@@ -13,3 +13,4 @@
         </x-panel>
     </main>
 </section>
+<x-footer/>

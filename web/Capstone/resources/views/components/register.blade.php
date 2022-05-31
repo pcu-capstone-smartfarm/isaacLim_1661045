@@ -1,8 +1,8 @@
 <x-layout>
 </x-layout>
-
-    <section class="px-6 pb-6">
-        <main class="max-w-lg mx-auto mt-10 bg-gray-100 border-gray-200 p-6 rounded-xl">
+<div class="h-auto" style="min-height: 80%">
+    <section class="px-6 pb-2">
+        <main class="max-w-lg mx-auto mt-4 bg-gray-100 border-gray-200 p-6 rounded-xl">
             <h1 dusk="registerPage-infor" class="text-center font-bold tesxt-xl">회 원 가 입</h1>
             <form dusk="registerPage-register-form" method="POST" action="{{route('register')}}">
                 @csrf
@@ -67,3 +67,5 @@
         </main>
     </section>
 <x-flash/>
+</div>
+<x-footer/>

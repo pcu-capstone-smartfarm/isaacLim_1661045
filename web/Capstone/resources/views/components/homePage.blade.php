@@ -1,5 +1,5 @@
 <x-index/>
-@auth
-@else
-<x-NoLoginHome/>
-@endauth
+<div class="h-auto" style="min-height: 80%">
+    <x-NoLoginHome/>
+</div>
+<x-footer/>

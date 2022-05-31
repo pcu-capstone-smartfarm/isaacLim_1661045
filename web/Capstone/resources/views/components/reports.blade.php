@@ -100,3 +100,4 @@
 </script>
 
 @endif
+<x-footer/>
