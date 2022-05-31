@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nongsaro_gardendtl;
+use App\Models\Nongsaro_gardenlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class OpenApiController extends Controller
 {
-    public function getPlantName()
+    public function getGardenList()
     {
         $response = Http::get('http://api.nongsaro.go.kr/service/garden/gardenList',[
             'apiKey'=>env("NONGSARO_API_KEY"),
@@ -15,6 +17,25 @@ class OpenApiController extends Controller
         ]);
         $xmlObject = simplexml_load_string((string)$response->getBody(), NULL, LIBXML_NOCDATA);
         return $this->xmlToJson($xmlObject);
+    }
+
+    public function getGardenDtl()
+    {
+        $re = array();
+        $gardenlist = Nongsaro_gardenlist::all();
+        foreach ($gardenlist as $value) {
+            $response = Http::get('http://api.nongsaro.go.kr/service/garden/gardenDtl', [
+                'apiKey'=>env("NONGSARO_API_KEY"),
+                'cntntsNo'=>$value->cntntsNo,
+            ]);
+            $xmlObject = simplexml_load_string((string)$response->getBody(), NULL, LIBXML_NOCDATA);
+            $xmlObject = $xmlObject->body->item;
+            $xmlObject->addChild("nongsaro_gardenlist_id", $value->id);
+            $json = json_encode($xmlObject, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            $json = json_decode(preg_replace('/\\\\\//', '/', $json));
+            array_push($re, $json);
+        }
+        return $re;
     }
 
     // https://intrepidgeeks.com/tutorial/php-xml-and-cdata-attributes
