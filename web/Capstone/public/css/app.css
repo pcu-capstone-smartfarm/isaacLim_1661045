@@ -466,6 +466,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   bottom: 0.75rem;
 }.right-3 {
   right: 0.75rem;
+<<<<<<< HEAD
+=======
+}.top-2 {
+  top: 0.5rem;
+}.left-20 {
+  left: 5rem;
+>>>>>>> FrontEnd
 }.z-40 {
   z-index: 40;
 }.z-50 {
@@ -474,6 +481,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 0;
 }.float-right {
   float: right;
+<<<<<<< HEAD
+=======
+}.float-left {
+  float: left;
+>>>>>>> FrontEnd
 }.mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -531,6 +543,21 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0.5rem;
 }.-ml-px {
   margin-left: -1px;
+<<<<<<< HEAD
+=======
+}.mt-40 {
+  margin-top: 10rem;
+}.ml-20 {
+  margin-left: 5rem;
+}.ml-14 {
+  margin-left: 3.5rem;
+}.ml-10 {
+  margin-left: 2.5rem;
+}.mt-16 {
+  margin-top: 4rem;
+}.mt-0 {
+  margin-top: 0px;
+>>>>>>> FrontEnd
 }.block {
   display: block;
 }.inline {
@@ -559,12 +586,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1.25rem;
 }.h-full {
   height: 100%;
+<<<<<<< HEAD
 }.h-auto {
   height: auto;
+=======
+>>>>>>> FrontEnd
 }.h-max {
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
+<<<<<<< HEAD
+=======
+}.h-auto {
+  height: auto;
+>>>>>>> FrontEnd
 }.max-h-60 {
   max-height: 15rem;
 }.max-h-52 {
@@ -593,6 +628,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100vw;
 }.w-64 {
   width: 16rem;
+<<<<<<< HEAD
+=======
+}.w-1\/2 {
+  width: 50%;
+}.w-2\/3 {
+  width: 66.666667%;
+}.w-max {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+>>>>>>> FrontEnd
 }.max-w-7xl {
   max-width: 80rem;
 }.max-w-6xl {
@@ -619,6 +665,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex-basis: 25%;
 }.basis-1\/6 {
   flex-basis: 16.666667%;
+<<<<<<< HEAD
+=======
+}.basis-1\/2 {
+  flex-basis: 50%;
+>>>>>>> FrontEnd
 }.origin-top {
   transform-origin: top;
 }.origin-top-left {
@@ -691,6 +742,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-items: center;
 }.gap-4 {
   gap: 1rem;
+<<<<<<< HEAD
+=======
+}.gap-2 {
+  gap: 0.5rem;
+>>>>>>> FrontEnd
 }.gap-x-2 {
   -moz-column-gap: 0.5rem;
        column-gap: 0.5rem;
@@ -865,10 +921,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 1.5rem;
 }.p-4 {
   padding: 1rem;
+<<<<<<< HEAD
 }.p-1 {
   padding: 0.25rem;
 }.p-0 {
   padding: 0px;
+=======
+}.p-0 {
+  padding: 0px;
+}.p-1 {
+  padding: 0.25rem;
+>>>>>>> FrontEnd
 }.px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -917,12 +980,24 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+<<<<<<< HEAD
 }.py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
 }.px-20 {
   padding-left: 5rem;
   padding-right: 5rem;
+=======
+}.px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+>>>>>>> FrontEnd
 }.pt-1 {
   padding-top: 0.25rem;
 }.pl-3 {
@@ -1332,12 +1407,25 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-top: 0px;
   }.sm\:-ml-10 {
     margin-left: -2.5rem;
+<<<<<<< HEAD
   }.sm\:mt-8 {
     margin-top: 2rem;
   }.sm\:mt-4 {
     margin-top: 1rem;
   }.sm\:mt-1 {
     margin-top: 0.25rem;
+=======
+  }.sm\:mt-1 {
+    margin-top: 0.25rem;
+  }.sm\:mt-4 {
+    margin-top: 1rem;
+  }.sm\:mt-16 {
+    margin-top: 4rem;
+  }.sm\:mt-12 {
+    margin-top: 3rem;
+  }.sm\:mt-8 {
+    margin-top: 2rem;
+>>>>>>> FrontEnd
   }.sm\:block {
     display: block;
   }.sm\:flex {
@@ -1368,6 +1456,11 @@ Ensure the default browser behavior of the `hidden` attribute.
     justify-content: space-between;
   }.sm\:gap-4 {
     gap: 1rem;
+<<<<<<< HEAD
+=======
+  }.sm\:gap-2 {
+    gap: 0.5rem;
+>>>>>>> FrontEnd
   }.sm\:gap-6 {
     gap: 1.5rem;
   }.sm\:gap-x-4 {
@@ -1393,6 +1486,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   }.sm\:py-6 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+<<<<<<< HEAD
+=======
+  }.sm\:py-32 {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+>>>>>>> FrontEnd
   }.sm\:pt-0 {
     padding-top: 0px;
   }.sm\:pt-4 {
@@ -1401,12 +1500,20 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding-top: 1.5rem;
   }.sm\:pr-4 {
     padding-right: 1rem;
+<<<<<<< HEAD
   }.sm\:pt-8 {
     padding-top: 2rem;
+=======
+>>>>>>> FrontEnd
   }.sm\:pl-7 {
     padding-left: 1.75rem;
   }.sm\:pr-12 {
     padding-right: 3rem;
+<<<<<<< HEAD
+=======
+  }.sm\:pt-8 {
+    padding-top: 2rem;
+>>>>>>> FrontEnd
   }.sm\:text-left {
     text-align: left;
   }.sm\:text-right {
@@ -1417,6 +1524,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   }.sm\:text-4xl {
     font-size: 2.25rem;
     line-height: 2.5rem;
+<<<<<<< HEAD
+=======
+  }.sm\:font-semibold {
+    font-weight: 600;
+>>>>>>> FrontEnd
   }.sm\:duration-700 {
     transition-duration: 700ms;
   }
@@ -1434,12 +1546,21 @@ Ensure the default browser behavior of the `hidden` attribute.
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
+<<<<<<< HEAD
   }.md\:w-max {
     width: -webkit-max-content;
     width: -moz-max-content;
     width: max-content;
   }.md\:w-9\/12 {
     width: 75%;
+=======
+  }.md\:w-9\/12 {
+    width: 75%;
+  }.md\:w-max {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+>>>>>>> FrontEnd
   }.md\:flex-1 {
     flex: 1 1 0%;
   }.md\:grid-cols-2 {
@@ -1469,10 +1590,19 @@ Ensure the default browser behavior of the `hidden` attribute.
   }
 }@media (min-width: 1024px) {.lg\:mt-20 {
     margin-top: 5rem;
+<<<<<<< HEAD
   }.lg\:ml-14 {
     margin-left: 3.5rem;
   }.lg\:mt-10 {
     margin-top: 2.5rem;
+=======
+  }.lg\:mt-10 {
+    margin-top: 2.5rem;
+  }.lg\:mt-1 {
+    margin-top: 0.25rem;
+  }.lg\:ml-14 {
+    margin-left: 3.5rem;
+>>>>>>> FrontEnd
   }.lg\:w-0 {
     width: 0px;
   }.lg\:max-w-7xl {
