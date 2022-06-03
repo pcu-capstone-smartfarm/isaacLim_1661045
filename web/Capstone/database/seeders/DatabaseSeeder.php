@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            // Nongsaro_gardenlistSeeder::class,
+            Nongsaro_gardenlistSeeder::class,
             Nongsaro_gardendtlSeeder::class,
         ]);
     }
