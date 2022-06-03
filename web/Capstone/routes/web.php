@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionsController;
 use App\Models\Arduino;
+use App\Models\File;
 use App\Models\Nongsaro_gardendtl;
 use App\Models\Nongsaro_gardenlist;
 use App\Models\User;
@@ -50,7 +51,6 @@ Route::middleware('auth')->group(function () {
 
         //식물 도감 페이지
         Route::get('/plantDict', [PlantsController::class, 'plantSearchPage'])->name('plantDict');
-        Route::post('/plantSearch', [PlantsController::class, 'plantSearch'])->name('plantSearch');
         Route::get('/plantDetail/{plantNO}', [PlantsController::class, 'plantDetail'])->name('plantDetail');
 
         //식물 등록 후 아두이노 대기 페이지
@@ -67,11 +67,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/illuminance', [ReportsController::class, 'illuminanceReports'])->name('reports_illuminance');
             Route::get('/temp', [ReportsController::class, 'tempReports'])->name('reports_temp');
         });
+
+        Route::get('/plantDiary', [PlantsController::class, 'plantDiaryPage'])->name('plantDiary');
     });
 });
 
 Route::get('/test', function () {
-    return view('components.test', [
-        'gardendtl'=>Nongsaro_gardendtl::find(3),
-    ]);
+    $url = env('AWS_CLOUDFRONT_S3_URL').'/arduinoImage/4/1654229631air_fill_airesult_json.json';
+    $json = json_decode(file_get_contents($url));
+    return $json->result;
 });
