@@ -14,6 +14,11 @@
             <div class="bg-white">
                 <div class="max-w-2xl mx-auto py-10 px-4 grid items-center grid-cols-1 gap-y-16 gap-x-8 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid-cols-2">
                     <div>
+                        <div class="inline-flex" style="cursor: pointer">
+                            <a class="flex" href="{{route('plantDict', ['userID' => auth()->user()->id])}}">
+                            <svg class="ml-2 sm:mt-1 flex-shrink-0 w-6 h-6 text-gray-500 dark:text-gray-400" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 14L3 7.5 10 1" stroke="currentColor" stroke-linecap="square"></path></svg><label class="text-sm sm:text-lg font-semibold" style="cursor: pointer">back</label>
+                            </a>
+                        </div>
                         <dl class="mt-4 sm:mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
                             <div>
                                 <dt class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">{{$gardendtl->gardenlist->cntntsSj != '' ? $gardendtl->gardenlist->cntntsSj : '데이터 없음'}}</dt>
@@ -115,13 +120,22 @@
                         </dl>
                     </div>
                     <div class="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
-                        <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[0]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[0]}}" alt="thumbnail1" class="bg-gray-300 rounded-lg border border-gray-500">
-                        <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[1]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[1]}}" alt="thumbnail2" class="bg-gray-300 rounded-lg border border-gray-500">
-                        <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[2]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[2]}}" alt="thumbnail3" class="bg-gray-300 rounded-lg border border-gray-500">
-                        <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[3]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[3]}}" alt="thumbnail4" class="bg-gray-300 rounded-lg border border-gray-500">
+                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[0]))
+                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[0]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[0]}}" alt="thumbnail1" class="bg-gray-300 rounded-lg border border-gray-500">
+                        @endif
+                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[1]))
+                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[1]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[1]}}" alt="thumbnail2" class="bg-gray-300 rounded-lg border border-gray-500">
+                        @endif
+                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[2]))
+                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[2]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[2]}}" alt="thumbnail3" class="bg-gray-300 rounded-lg border border-gray-500">
+                        @endif
+                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[3]))
+                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[3]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[3]}}" alt="thumbnail4" class="bg-gray-300 rounded-lg border border-gray-500">
+                        @endif
                     </div>
                 </div>
             </div>
         </main>
     </section>
 </section>
+<x-footer/>

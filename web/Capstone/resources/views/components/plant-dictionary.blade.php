@@ -16,8 +16,7 @@
                     <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M1.5 1.5l12 12m-12 0l12-12" stroke="currentColor"></path></svg>
                 </div>
                 <div id="searcher">
-                    <form id="searchform" method="POST" action="{{route('plantSearch', ['userID'=>auth()->user()->id])}}">
-                        @csrf
+                    <form id="searchform" method="GET" action="{{route('plantDict', ['userID'=>auth()->user()->id])}}">
                         <div class="text-sm font-semibold w-full text-left flex">
                             <label class="basis-1/6 text-sm sm:text-lg px-2 text-center">식물명</label>
                             <input type="text" name="plantType" id="searchbar" class="bg-gray-50 hover:bg-gray-200 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-2 sm:pl-7 sm:pr-12 sm:py-3 text-sm sm:text-lg border-gray-300 rounded-md" placeholder="검색">
@@ -295,9 +294,11 @@
                     @endif
                 </div>
                 </div>
+                @if(isset($plantslist))
                 <section class="flex justify-center py-4">
                     {{$plantslist->links('vendor.pagination.tailwind')}}
                 </section>
+                @endif
             </x-panel>
         </main>
     </section>
