@@ -17,6 +17,7 @@ Route::prefix('User/{userID}/arduino')->group(function (){
     Route::post('/refresh', [ArduinoController::class, 'refresh']);
     Route::post('/imgpush', [ArduinoController::class, 'imagePush']);
     Route::get('/imgget', [ArduinoController::class, 'imageGet']);
+    Route::post('/airesult', [ArduinoController::class, 'aiPregResult']);
 });
 
 Route::get('/apiTest', function(){
