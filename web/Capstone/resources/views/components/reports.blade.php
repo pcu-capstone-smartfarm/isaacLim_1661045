@@ -100,4 +100,6 @@
 </script>
 
 @endif
+<div class="pt-4">
 <x-footer/>
+</div>

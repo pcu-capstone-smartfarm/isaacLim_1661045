@@ -81,7 +81,7 @@
                         <a class="text-base font-medium text-gray-500 hover:text-gray-900" href="{{route('plantDict', ['userID'=>auth()->user()->id])}}" target="blank">
                             사전
                         </a>
-                        <a class="text-base font-medium text-gray-500 hover:text-gray-900">
+                        <a class="text-base font-medium text-gray-500 hover:text-gray-900" href="{{route('plantDiary', ['userID'=>auth()->user()->id])}}">
                             일지
                         </a>
                         @endauth
@@ -147,6 +147,14 @@
                                         <svg class="flex-shrink-0 w-6 h-6  text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0a.5.5 0 00-.5.5v13a.5.5 0 00.5.5H3V0H1.5z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M4 15h1v-1h6.5a2.5 2.5 0 002.5-2.5v-9A2.5 2.5 0 0011.5 0H4v15zm7-10H7V4h4v1z" fill="currentColor"></path></svg>
                                     </div>
                                     <span class="flex-1 ml-3 whitespace-nowrap">식물 도감</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('plantDiary', ['userID'=>auth()->user()->id])}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <div class="">
+                                        <svg class="flex-shrink-0 w-6 h-6  text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 0H2v14.5a.5.5 0 00.812.39L7.5 11.14l4.688 3.75A.5.5 0 0013 14.5V0z" fill="currentColor"></path></svg>
+                                    </div>
+                                    <span class="flex-1 ml-3 whitespace-nowrap">일지</span>
                                 </a>
                             </li>
                             <li>

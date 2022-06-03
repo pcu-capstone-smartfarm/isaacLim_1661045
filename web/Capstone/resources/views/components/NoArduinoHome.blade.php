@@ -68,6 +68,7 @@
         </main>
     </section>
     <x-flash/>
+    <x-footer/>
 </section>
 <script type="text/javascript">
     function filterFunction() {
