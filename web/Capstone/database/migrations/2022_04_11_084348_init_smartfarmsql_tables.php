@@ -166,6 +166,7 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('plant_id');
             $table->unsignedBigInteger('filesize');
             $table->string('path');
             $table->string('filename');
@@ -175,6 +176,7 @@ return new class extends Migration
             $table->softDeletesTz();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('plant_id')->references('id')->on('plants')->onDelete('cascade');
         });
 
         //사용자 토큰값 테이블(personal_access_tokens)
@@ -197,7 +199,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Files');
+        Schema::dropIfExists('files');
         Schema::dropIfExists('plants');
         Schema::dropIfExists('arduinos');
         Schema::dropIfExists('nongsaro_gardendtls');
