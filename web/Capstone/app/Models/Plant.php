@@ -26,8 +26,13 @@ class Plant extends Model
         return $this->belongsTo('App\Models\Serial');
     }
 
+    public function files()
+    {
+        return $this->hasMany('App\Models\File');
+    }
+
     public function nongsaro_gardenlists()
     {
-        return $this->belongsTo('App\Models\Nongsaro_gardenlist');
+        return $this->belongsTo(Nongsaro_gardenlist::class, 'nongsaro_gardenlist_id');
     }
 }
