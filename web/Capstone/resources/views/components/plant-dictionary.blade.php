@@ -12,8 +12,10 @@
     <section class="px-2 py-2 sm:py-4">
         <main>
             <x-panel class="group p-1 sm:p-4">
-                <div class="pb-4 float-right" onclick="window.close()">
-                    <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M1.5 1.5l12 12m-12 0l12-12" stroke="currentColor"></path></svg>
+                <div class="pb-4 float-right">
+                    <a href="{{route('home', ['userID'=>auth()->user()->id])}}">
+                        <svg class="fill-green-500" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M7.825.12a.5.5 0 00-.65 0L0 6.27v7.23A1.5 1.5 0 001.5 15h4a.5.5 0 00.5-.5v-3a1.5 1.5 0 013 0v3a.5.5 0 00.5.5h4a1.5 1.5 0 001.5-1.5V6.27L7.825.12z"></path></svg>
+                    </a>
                 </div>
                 <div id="searcher">
                     <form id="searchform" method="GET" action="{{route('plantDict', ['userID'=>auth()->user()->id])}}">
