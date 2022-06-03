@@ -9,10 +9,15 @@ class File extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','filesize', 'path', 'filename', 'originalname', 'type', 's3_path'];
+    protected $fillable = ['user_id', 'plant_id', 'filesize', 'path', 'filename', 'originalname', 'type', 's3_path'];
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function plant()
+    {
+        return $this->belongsTo('App\Models\Plant');
     }
 }
