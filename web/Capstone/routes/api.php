@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('arduino')->group(function() {
     Route::post('/login', [ArduinoController::class, 'login']);
     Route::post('/serial', [ArduinoController::class, 'serialRegist']);
+    Route::post('/airesult', [ArduinoController::class, 'aiPregResult']);
 });
 Route::prefix('User/{userID}/arduino')->group(function (){
     Route::post('/input', [ArduinoController::class, 'sensorInput']);
@@ -17,7 +18,6 @@ Route::prefix('User/{userID}/arduino')->group(function (){
     Route::post('/refresh', [ArduinoController::class, 'refresh']);
     Route::post('/imgpush', [ArduinoController::class, 'imagePush']);
     Route::get('/imgget', [ArduinoController::class, 'imageGet']);
-    Route::post('/airesult', [ArduinoController::class, 'aiPregResult']);
 });
 
 Route::get('/apiTest', function(){

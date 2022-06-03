@@ -558,7 +558,8 @@ class ArduinoController extends Controller
         $fileRequest->merge(['userID'=>$userID])->validate([
             'image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'userID'=>'required|numeric',
-            'token'=>'required|string'
+            'plantID','required|numeric',
+            'token'=>'required|string',
         ]);
         if($fileRequest->hasFile('image')){
             $file = $fileRequest->file('image', FILEINFO_MIME_TYPE);
@@ -567,6 +568,7 @@ class ArduinoController extends Controller
             Storage::disk('s3')->put($filepath,file_get_contents($file));
             $modlfile = new File;
             $modlfile->user_id = $userID;
+            $modlfile->plant_id = $fileRequest->plantID;
             $modlfile->filesize = $file->getSize();
             $modlfile->path = $filepath;
             $modlfile->filename = $name;
