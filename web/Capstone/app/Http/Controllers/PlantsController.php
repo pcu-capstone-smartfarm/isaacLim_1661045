@@ -6,11 +6,13 @@ use App\Models\Nongsaro_gardendtl;
 use App\Models\Nongsaro_gardenlist;
 use App\Models\Plant;
 use App\Models\Serial;
+use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 class PlantsController extends Controller
@@ -62,25 +64,7 @@ class PlantsController extends Controller
         return redirect(route('userHome', ['userID'=>auth()->user()->id]))->with('success', '식물 등록 성공');
     }
 
-    public function plantSearchPage(Request $request)
-    {
-        if($request->session()->has('plantslist')){
-            echo "<script>";
-            echo "console.log('session has')";
-            echo "</script>";
-            $query = $request->session()->get('plantslist');
-        }
-        else{
-            $query = DB::table('nongsaro_gardenlists')->paginate(12)->setPath(route('plantDict', ['userID'=>auth()->user()->id]));
-        }
-        $consonant  = array('ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ');
-        return view('components.plant-dictionary', [
-            'consonant' => $consonant,
-            'plantslist' => $query,
-        ]);
-    }
-
-    public function plantSearch(Request $request, $userID)
+    public function plantSearchPage(Request $request, $userID)
     {
         $request->merge(['userID'=>$userID])->validate([
             'userID' => 'required|numeric',
@@ -121,7 +105,15 @@ class PlantsController extends Controller
             'flower_autumn'=>'sometimes|accepted',
             'flower_winter'=>'sometimes|accepted',
         ]);
+        $consonant  = array('ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ');
 
+        if($request->query()==null){
+            $query = Nongsaro_gardenlist::paginate(12);
+            return view('components.plant-dictionary', [
+                'consonant' => $consonant,
+                'plantslist' => $query,
+            ]);
+        }
         if($request->has('consonant') && !is_null($request->consonant)){
             if($request->consonant == 'ㄱ'){
                 $query = Nongsaro_gardenlist::where('cntntsSj', '>=', '가')->where('cntntsSj', '<', '나');
@@ -165,7 +157,14 @@ class PlantsController extends Controller
             elseif($request->consonant == 'ㅎ'){
                 $query = Nongsaro_gardenlist::where('cntntsSj', '>=', '하');
             }
-            return redirect()->route('plantDict', ['userID'=>auth()->user()->id])->with('plantslist', $query->paginate(12)->setPath(route('plantDict', ['userID'=>auth()->user()->id])));
+            $page = (Array)$request->query();
+            if($request->has('page')){
+                unset($page['page']);
+            }
+            return view('components.plant-dictionary', [
+                'consonant' => $consonant,
+                'plantslist' => $query->paginate(12)->withPath(route('plantDict', $page)),
+            ]);
         }
 
         $query = Nongsaro_gardendtl::where('nongsaro_gardenlist_id', '<', '0');
@@ -293,17 +292,34 @@ class PlantsController extends Controller
             }
         }
 
-        if($request->plantType !== null){
+        if($request->has('plantType') && $request->plantType !== null){
             $query1->orWhere('cntntsSj', 'like', '%'.$request->plantType.'%');
         }
-        // dd($query1->paginate(12));
-        return redirect()->route('plantDict', ['userID'=>auth()->user()->id])->with('plantslist', $query1->paginate(12)->setPath(route('plantDict', ['userID'=>auth()->user()->id])));
+        // else{
+        //     $query = Nongsaro_gardenlist::paginate(12)->withPath(route('plantDict', $page));
+        // }
+        $page = (Array)$request->query();
+        if($request->has('page')){
+            unset($page['page']);
+        }
+        return view('components.plant-dictionary', [
+            'consonant' => $consonant,
+            'plantslist' => $query1->paginate(12)->withPath(route('plantDict', $page)),
+        ]);
     }
 
     public function plantDetail($userID, $plantNO){
         $plant = Nongsaro_gardendtl::find($plantNO);
         return view('components.plant-dictionary-detail', [
             'gardendtl'=>$plant,
+        ]);
+    }
+
+    public function plantDiaryPage($userID){
+        $user = User::find($userID);
+        return view('components.plant-diary', [
+            'user'=>$user,
+            'plant'=>$user->plants->first(),
         ]);
     }
 }
