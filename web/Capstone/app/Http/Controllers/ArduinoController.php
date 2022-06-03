@@ -246,9 +246,6 @@ class ArduinoController extends Controller
      */
 
     public function sensorInput(Request $request, $userID){
-        if ($userID != auth()->user()->id) {
-            return response()->json(['fail' => '사용자 정보 불일치'], 401);
-        }
         $request->merge(['userID'=>$userID])->validate([
             'userID' => 'required|numeric',
             'plantID' => 'required|numeric',
@@ -467,7 +464,80 @@ class ArduinoController extends Controller
         }
         $plant->device_verification_at = now();
         $plant->save();
-        return response()->json(['success'=>'등록 완료', 'userID'=>$plant->user_id], 201);
+        $plantlist = $plant->nongsaro_gardenlists;
+        $plantdtl = $plantlist->gardendtl;
+        $temp = preg_replace('/\s+/','', $plantdtl->grwhTpCodeNm);
+        $water = preg_replace('/\s+/', '', $plantdtl->hdCodeNm);
+        $illuminance = preg_replace('/\s+/', '', ".".$plantdtl->lighttdemanddoCodeNm);
+        $light = 0; $lightmin = 0; $lightmax = 0;
+        if(strpos($water, "이상")==true){
+            $water = strtok($water, "%이상")."100%";
+        }
+        elseif(strpos($water, "미만")==true){
+            $water = "0~".strtok($water, "미만");
+        }
+        elseif($water == ""){
+            $water = "0~100%";
+        }
+        if(strpos($illuminance, "낮은광도")==true){
+            $light +=1;
+        }
+        if(strpos($illuminance, "중간광도")==true){
+            $light +=10;
+        }
+        if(strpos($illuminance, "높은광도")==true){
+            $light +=100;
+        }
+        if($light == 0){
+            $lightmin = 0;
+            $lightmax = 10000;
+        }
+        elseif($light == 1){
+            $lightmin = 300;
+            $lightmax = 800;
+        }
+        elseif($light == 10){
+            $lightmin = 800;
+            $lightmax = 1500;
+        }
+        elseif($light == 11){
+            $lightmin = 300;
+            $lightmax = 1500;
+        }
+        elseif($light == 100){
+            $lightmin = 1500;
+            $lightmax = 10000;
+        }
+        elseif($light == 101){
+            $lightmin = 300;
+            $lightmax = 10000;
+        }
+        elseif($light == 110){
+            $lightmin = 800;
+            $lightmax = 10000;
+        }
+        elseif($light == 111){
+            $lightmin = 300;
+            $lightmax = 10000;
+        }
+
+        return response()->json([
+            'success'=>'등록 완료',
+            'userID'=>$plant->user_id,
+            'plantID'=>$plant->id,
+            'seonsor'=>[
+                'min'=>[
+                    'temp'=>strtok($temp, "~"),
+                    'water'=>strtok($water, "~"),
+                    'illuminance'=>$lightmin,
+                ],
+                'max'=>[
+                    'temp'=>strtok(substr($temp, strlen(strtok($temp, "~"))+1), "℃"),
+                    'water'=>strtok(substr($water, strlen(strtok($water, "~"))+1), "%"),
+                    'illuminance'=>$lightmax,
+                ],
+            ]
+        ], 201);
     }
 
     public function serialCheck(Request $request)
@@ -493,7 +563,7 @@ class ArduinoController extends Controller
         if($fileRequest->hasFile('image')){
             $file = $fileRequest->file('image', FILEINFO_MIME_TYPE);
             $name = time().$file->getClientOriginalName();
-            $filepath = '/arduinoImage/'.base64_encode(User::find($userID)->nickname).'/'.$name;
+            $filepath = '/arduinoImage/'.$userID.'/'.$name;
             Storage::disk('s3')->put($filepath,file_get_contents($file));
             $modlfile = new File;
             $modlfile->user_id = $userID;
@@ -521,12 +591,23 @@ class ArduinoController extends Controller
             'userID'=>'required|numeric',
             'token'=>'required|string'
         ]);
-        $file = File::whereDate('created_at', Carbon::today())->get();
+        // $file = File::whereDate('created_at', Carbon::today())->get();
+        $file = File::all();
         $today_data = [];
         foreach ($file as $data) {
             $today_data[] = $data;
         }
         return response()->json($today_data, 201);
+    }
+    public function aiPregResult(Request $request){
+        $request->validate([
+            'token' => 'required|string',
+            'path' =>'required|string',
+            'result'=>'required|string',
+        ]);
+        $json = json_encode(Array("path"=>$request->path, "result"=>$request->result), JSON_UNESCAPED_UNICODE);
+        Storage::disk('s3')->put(strtok($request->path, ".")."_airesult_json.json", $json);
+        return response()->json(['success'=>'json Upload Complete'], 201);
     }
 
     protected function respondWithToken($token)
