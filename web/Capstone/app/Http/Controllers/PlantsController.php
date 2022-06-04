@@ -282,7 +282,7 @@ class PlantsController extends Controller
         }
 
         $query = $query->get();
-        $query1 = DB::table('Nongsaro_gardenlists');
+        $query1 = DB::table('nongsaro_gardenlists');
         for($i = 0; $i < count($query); $i++){
             if($i == 0){
                 $query1 = $query1->where('id', $query[$i]->nongsaro_gardenlist_id);

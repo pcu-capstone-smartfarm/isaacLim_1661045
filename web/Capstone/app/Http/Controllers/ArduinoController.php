@@ -459,9 +459,9 @@ class ArduinoController extends Controller
         }
 
         //이미 인증된 기기에 접속 시도
-        if($plant->device_verification_at != null){
-            return response()->json(['fail' => '기기 중복'], 403);
-        }
+        // if($plant->device_verification_at != null){
+        //     return response()->json(['fail' => '기기 중복'], 403);
+        // }
         $plant->device_verification_at = now();
         $plant->save();
         $plantlist = $plant->nongsaro_gardenlists;
@@ -601,9 +601,11 @@ class ArduinoController extends Controller
         }
         return response()->json($today_data, 201);
     }
-    public function aiPregResult(Request $request){
+
+    public function aipregResult(Request $request)
+    {
         $request->validate([
-            'token' => 'required|string',
+            'token' =>'required|string',
             'path' =>'required|string',
             'result'=>'required|string',
         ]);
