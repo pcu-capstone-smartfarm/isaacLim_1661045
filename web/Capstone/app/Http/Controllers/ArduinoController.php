@@ -261,8 +261,8 @@ class ArduinoController extends Controller
             'plant_id' => $request->plantID,
             'humidity' => $request->humidity,
             'temp' => $request->temp,
-            'humidity_soil' => $request->humidity_soil,
-            'illuminance' => $request->illuminance
+            'humidity_soil' => -0.1 * intval($request->humidity_soil)+100,
+            'illuminance' => -12.5 * intval($request->illuminance)+10000
         ]);
         $arduino->save();
 
@@ -561,9 +561,9 @@ class ArduinoController extends Controller
     public function imagePush(Request $fileRequest, $userID)
     {
         $fileRequest->merge(['userID'=>$userID])->validate([
-            'image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
             'userID'=>'required|numeric',
-            'plantID','required|numeric',
+            'plantID'=>'required|numeric',
             'token'=>'required|string',
         ]);
         if($fileRequest->hasFile('image')){
