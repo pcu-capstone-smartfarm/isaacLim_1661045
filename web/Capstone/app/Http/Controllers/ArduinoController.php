@@ -521,6 +521,11 @@ class ArduinoController extends Controller
             $lightmax = 10000;
         }
 
+        $watermin = -10 * intval(strtok($water, "~")) + 1000;
+        $watermax = -10 * intval(strtok(substr($water, strlen(strtok($water, "~"))+1), "%")) + 1000;
+        $lightmin = -0.08 * $lightmin + 800;
+        $lightmax = -0.08 * $lightmax + 800;
+
         return response()->json([
             'success'=>'등록 완료',
             'userID'=>$plant->user_id,
@@ -528,12 +533,12 @@ class ArduinoController extends Controller
             'seonsor'=>[
                 'min'=>[
                     'temp'=>strtok($temp, "~"),
-                    'water'=>strtok($water, "~"),
+                    'water'=>$watermin,
                     'illuminance'=>$lightmin,
                 ],
                 'max'=>[
                     'temp'=>strtok(substr($temp, strlen(strtok($temp, "~"))+1), "℃"),
-                    'water'=>strtok(substr($water, strlen(strtok($water, "~"))+1), "%"),
+                    'water'=>$watermax,
                     'illuminance'=>$lightmax,
                 ],
             ]
