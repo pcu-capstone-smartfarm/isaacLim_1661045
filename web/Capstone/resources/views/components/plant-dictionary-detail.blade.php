@@ -120,17 +120,24 @@
                         </dl>
                     </div>
                     <div class="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
-                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[0]))
-                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[0]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[0]}}" alt="thumbnail1" class="bg-gray-300 rounded-lg border border-gray-500">
-                        @endif
-                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[1]))
-                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[1]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[1]}}" alt="thumbnail2" class="bg-gray-300 rounded-lg border border-gray-500">
-                        @endif
-                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[2]))
-                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[2]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[2]}}" alt="thumbnail3" class="bg-gray-300 rounded-lg border border-gray-500">
-                        @endif
-                        @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[3]))
-                            <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[3]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[3]}}" alt="thumbnail4" class="bg-gray-300 rounded-lg border border-gray-500">
+                        @if($gardendtl->id!=218)
+                            @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[0]))
+                                <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[0]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[0]}}" alt="thumbnail1" class="bg-gray-300 rounded-lg border border-gray-500">
+                            @endif
+                            @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[1]))
+                                <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[1]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[1]}}" alt="thumbnail2" class="bg-gray-300 rounded-lg border border-gray-500">
+                            @endif
+                            @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[2]))
+                                <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[2]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[2]}}" alt="thumbnail3" class="bg-gray-300 rounded-lg border border-gray-500">
+                            @endif
+                            @if (isset(explode('|', $gardendtl->gardenlist->rtnFileCours)[3]))
+                                <img src="https://nongsaro.go.kr/{{explode('|', $gardendtl->gardenlist->rtnFileCours)[3]}}/{{explode('|', $gardendtl->gardenlist->rtnStreFileNm)[3]}}" alt="thumbnail4" class="bg-gray-300 rounded-lg border border-gray-500">
+                            @endif
+                        @else
+                            <img src="{{env("AWS_CLOUDFRONT_S3_URL")."/".explode('|', $gardendtl->gardenlist->rtnOrginlFileNm)[0]}}" alt="thumbnail1" class="bg-gray-300 rounded-lg border border-gray-500">
+                            <img src="{{env("AWS_CLOUDFRONT_S3_URL")."/".explode('|', $gardendtl->gardenlist->rtnOrginlFileNm)[1]}}" alt="thumbnail2" class="bg-gray-300 rounded-lg border border-gray-500">
+                            <img src="{{env("AWS_CLOUDFRONT_S3_URL")."/".explode('|', $gardendtl->gardenlist->rtnOrginlFileNm)[2]}}" alt="thumbnail3" class="bg-gray-300 rounded-lg border border-gray-500">
+                            <img src="{{env("AWS_CLOUDFRONT_S3_URL")."/".explode('|', $gardendtl->gardenlist->rtnOrginlFileNm)[3]}}" alt="thumbnail4" class="bg-gray-300 rounded-lg border border-gray-500">
                         @endif
                     </div>
                 </div>
