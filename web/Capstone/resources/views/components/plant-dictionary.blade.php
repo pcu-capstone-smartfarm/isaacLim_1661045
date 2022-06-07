@@ -284,12 +284,21 @@
                     {{-- 식물 리스트 loop --}}
                     @if(isset($plantslist))
                         @foreach ($plantslist as $data)
+                        @if($data->id != 218)
                             <a href="{{route('plantDetail', ['userID'=>auth()->user()->id, 'plantNO'=>$data->id])}}" class="group">
                                 <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
                                     <img src="https://nongsaro.go.kr/{{explode('|', $data->rtnFileCours)[0]}}/{{explode('|', $data->rtnStreFileNm)[0]}}" class="w-full h-full object-center object-cover group-hover:opacity-75">
                                 </div>
                                 <p class="mt-1 text-lg font-medium text-gray-900">{{$data->cntntsSj}}</p>
                             </a>
+                        @else
+                            <a href="{{route('plantDetail', ['userID'=>auth()->user()->id, 'plantNO'=>$data->id])}}" class="group">
+                                <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+                                    <img src="{{env("AWS_CLOUDFRONT_S3_URL")."/".explode('|', $data->rtnOrginlFileNm)[0]}}" class="w-full h-full object-center object-cover group-hover:opacity-75">
+                                </div>
+                                <p class="mt-1 text-lg font-medium text-gray-900">{{$data->cntntsSj}}</p>
+                            </a>
+                        @endif
                         @endforeach
                     @else
                         <h1>요청하신 정보를 찾을 수 없습니다.</h1>
