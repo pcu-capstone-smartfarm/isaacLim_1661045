@@ -32,5 +32,17 @@ class Nongsaro_gardenlistSeeder extends Seeder
             $nongsaro->rtnImgSeCode = $value->rtnImgSeCode;
             $nongsaro->save();
         }
+        $nongsaro = new Nongsaro_gardenlist;
+        $nongsaro->cntntsNo = 21111;
+        $nongsaro->cntntsSj = "애호박";
+        $nongsaro->rtnFileSeCode = "Aehobak1|Aehobak2|Aehobak3|Aehobak4";
+        $nongsaro->rtnFileSn = "1|2|3|4";
+        $nongsaro->rtnOrginlFileNm = "Aehobak1.jpeg|Aehobak2.jpeg|Aehobak3.png|Aehobak4.jpeg";
+        $nongsaro->rtnStreFileNm = "__";
+        $nongsaro->rtnFileCours = "cms_contents/301";
+        $nongsaro->rtnImageDc = "애호박|애호박|애호박|애호박";
+        $nongsaro->rtnThumbFileNm = "Aehobak1.jpeg|Aehobak2.jpeg|Aehobak3.jpeg|Aehobak4.jpeg";
+        $nongsaro->rtnImgSeCode = "0";
+        $nongsaro->save();
     }
 }
