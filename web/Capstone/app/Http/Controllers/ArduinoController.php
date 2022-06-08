@@ -261,8 +261,8 @@ class ArduinoController extends Controller
             'plant_id' => intval($request->plantID),
             'humidity' => intval($request->humidity),
             'temp' => intval($request->temp),
-            'humidity_soil' => intval((1030 - intval($request->humidity_soil) / 8.3)),
-            'illuminance' => intval((1030 - intval($request->illuminance) / 0.103))
+            'humidity_soil' => intval((1030 - intval($request->humidity_soil)) / 8.3),
+            'illuminance' => intval((1030 - intval($request->illuminance)) / 0.103)
         ]);
         $arduino->save();
 
@@ -522,7 +522,7 @@ class ArduinoController extends Controller
         }
 
         $watermin = intval(-8.3 * intval(strtok($water, "~"))) + 1030;
-        $watermax = intval(-8.3 * intval(strtok(substr($water, strlen(strtok($water, "~"))+1), "%")) + 1030);
+        $watermax = intval(-8.3 * intval(strtok(substr($water, strlen(strtok($water, "~"))+1), "%"))) + 1030;
         $lightmin = intval(-0.103 * $lightmin + 1030);
         $lightmax = intval(-0.103 * $lightmax + 1030);
 
