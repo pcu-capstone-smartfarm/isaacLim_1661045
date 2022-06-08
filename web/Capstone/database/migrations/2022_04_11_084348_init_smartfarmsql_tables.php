@@ -153,7 +153,7 @@ return new class extends Migration
             $table->softDeletesTz();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('plant_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('plant_id')->references('id')->on('plants')->onDelete('cascade');
 
             $table->index('humidity');
             $table->index('temp');
