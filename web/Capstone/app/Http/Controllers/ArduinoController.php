@@ -250,19 +250,19 @@ class ArduinoController extends Controller
             'userID' => 'required|numeric',
             'plantID' => 'required|numeric',
             'token' => 'required|string',
-            'humidity' => 'numeric',
-            'temp' => 'numeric',
-            'humidity_soil' => 'numeric',
-            'illuminance' => 'numeric'
+            'humidity' => 'required|string',
+            'temp' => 'required|string',
+            'humidity_soil' => 'required|string',
+            'illuminance' => 'required|string'
         ]);
 
         $arduino = new Arduino([
             'user_id' => $userID,
-            'plant_id' => $request->plantID,
-            'humidity' => $request->humidity,
-            'temp' => $request->temp,
-            'humidity_soil' => -0.1 * intval($request->humidity_soil)+100,
-            'illuminance' => -12.5 * intval($request->illuminance)+10000
+            'plant_id' => intval($request->plantID),
+            'humidity' => intval($request->humidity),
+            'temp' => intval($request->temp),
+            'humidity_soil' => intval(1030 - intval($request->humidity_soil) / 8.3),
+            'illuminance' => intval((1030 - intval($request->illuminance)) / 0.103)
         ]);
         $arduino->save();
 
@@ -521,10 +521,10 @@ class ArduinoController extends Controller
             $lightmax = 10000;
         }
 
-        $watermin = -10 * intval(strtok($water, "~")) + 1000;
-        $watermax = -10 * intval(strtok(substr($water, strlen(strtok($water, "~"))+1), "%")) + 1000;
-        $lightmin = -0.08 * $lightmin + 800;
-        $lightmax = -0.08 * $lightmax + 800;
+        $watermin = -8.3 * intval(strtok($water, "~")) + 1030;
+        $watermax = -8.3 * intval(strtok(substr($water, strlen(strtok($water, "~"))+1), "%")) + 1030;
+        $lightmin = -0.103 * $lightmin + 1030;
+        $lightmax = -0.103 * $lightmax + 1030;
 
         return response()->json([
             'success'=>'등록 완료',
