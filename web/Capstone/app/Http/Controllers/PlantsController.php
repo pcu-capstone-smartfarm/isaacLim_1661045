@@ -320,6 +320,7 @@ class PlantsController extends Controller
         return view('components.plant-diary', [
             'user'=>$user,
             'plant'=>$user->plants->first(),
+            'files'=>$user->files,
         ]);
     }
 }
