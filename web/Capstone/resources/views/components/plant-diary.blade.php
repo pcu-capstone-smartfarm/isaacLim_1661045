@@ -22,49 +22,21 @@
                     <h2 class="text-2xl font-extrabold text-gray-900 border-t border-gray-200 mt-2 pt-2">일일 일지</h2>
                     <div class="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-4">
 
-                        {{-- foreach($files as $file) --}}
-                        @for ($i=0; $i<3; $i++)
+                        @foreach($files as $file)
                         <div class="group relative">
                             <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-                                {{-- src = {{env('AWS_CLOUDFRONT_S3_URL').'/'.$file->path}} --}}
-                                <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg" alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug." class="w-full h-full object-center object-cover">
+                                <img src = "{{env('AWS_CLOUDFRONT_S3_URL').'/'.$file->path}}" alt="file" class="w-full h-full object-center object-cover">
                             </div>
                         <h3 class="mt-6 text-sm text-gray-500">
                             <span class="absolute inset-0"></span>
-                            {{-- $file->created_at->format('y-m-d') --}}
-                            날짜 1
+                            {{$file->created_at->format('y-m-d')}}
                         </h3>
-                            {{-- $json->body --}}
-                            <p class="text-base font-semibold text-gray-900">질병 정보 1</p>
-                            <p class="text-base font-semibold text-gray-900">질병 정보 2</p>
+                        @if(isset(json_decode(file_get_contents(env('AWS_CLOUDFRONT_S3_URL').substr($file->path, 0, strpos($file->path, explode("/", $file->type)[1])-1)."_airesult_json.json", true))["result"]))
+                            <p class="text-base font-semibold text-gray-900">{{json_decode(file_get_contents(env('AWS_CLOUDFRONT_S3_URL').substr($file->path, 0, strpos($file->path, explode("/", $file->type)[1])-1)."_airesult_json.json", true))["result"]}}</p>
                         </div>
-
-                    <div class="group relative">
-                        <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-                            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg" alt="Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant." class="w-full h-full object-center object-cover">
-                        </div>
-                        <h3 class="mt-6 text-sm text-gray-500">
-                            <span class="absolute inset-0"></span>
-                            날짜 1
-                        </h3>
-                            <p class="text-base font-semibold text-gray-900">질병 정보 1</p>
-                            <p class="text-base font-semibold text-gray-900">질병 정보 2</p>
+                        @endforeach
                     </div>
-
-                    <div class="group relative">
-                        <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-                            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="w-full h-full object-center object-cover">
-                        </div>
-                        <h3 class="mt-6 text-sm text-gray-500">
-                            <span class="absolute inset-0"></span>
-                            날짜 1
-                        </h3>
-                            <p class="text-base font-semibold text-gray-900">질병 정보 1</p>
-                            <p class="text-base font-semibold text-gray-900">질병 정보 2</p>
-                    </div>
-                    @endfor
-                    </div>
-                    <!-- pagination -->
+                    {{$file->link()}}
                 </div>
             </div>
         </div>
