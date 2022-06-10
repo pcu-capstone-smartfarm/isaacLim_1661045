@@ -3,23 +3,23 @@
 <section id="mainFrame" class="px-6  sm:py-4 flex md:items-center">
     <main class="mx-auto px-4 sm:px-6">
         <div>
-            <h1>{{$user->nickname}}´ÔÀÇ ½Ä¹° {{$plant->plantname}}´Â {{$plant->nongsaro_gardenlists->cntntsSj}}ÀÔ´Ï´Ù.</h1>
-            <h1>{{$plant->nongsaro_gardenlists->cntntsSj}} °ü·Ã Á¤º¸<br>
+            <h1>{{$user->nickname}}ë‹˜ì˜ ì‹ë¬¼ {{$plant->plantname}}ëŠ” {{$plant->nongsaro_gardenlists->cntntsSj}}ì…ë‹ˆë‹¤.</h1>
+            <h1>{{$plant->nongsaro_gardenlists->cntntsSj}} ê´€ë ¨ ì •ë³´<br>
                 @if ($plant->nongsaro_gardenlists->gardendtl->adviseInfo!=null)
                     {{$plant->nongsaro_gardenlists->gardendtl->adviseInfo}}
                 @elseif ($plant->nongsaro_gardenlists->gardendtl->fncltyInfo!=null)
                     - {{$plant->nongsaro_gardenlists->gardendtl->fncltyInfo}}
                 @else
-                    °ü·ÃµÈ Á¤º¸°¡ ¾ÆÁ÷ ¾ø½À´Ï´Ù!
+                    ê´€ë ¨ëœ ì •ë³´ê°€ ì•„ì§ ì—†ìŠµë‹ˆë‹¤!
                 @endif
             </h1>
-            <h1>{{$plant->nongsaro_gardenlists->cntntsSj}}´Â {{$plant->nongsaro_gardenlists->gardendtl->postngplaceCodeNm}}¿¡ ¹èÄ¡ÇÏ´Â°ÍÀÌ Àû´çÇÕ´Ï´Ù.</h1>
-            <h1>{{$plant->nongsaro_gardenlists->cntntsSj}}´Â {{$plant->nongsaro_gardenlists->gardendtl->dlthtsCodeNm}} º´ÃæÇØ¸¦ Á¶½ÉÇØ¾ß ÇÕ´Ï´Ù.</h1>
+            <h1>{{$plant->nongsaro_gardenlists->cntntsSj}}ëŠ” {{$plant->nongsaro_gardenlists->gardendtl->postngplaceCodeNm}}ì— ë°°ì¹˜í•˜ëŠ”ê²ƒì´ ì ë‹¹í•©ë‹ˆë‹¤.</h1>
+            <h1>{{$plant->nongsaro_gardenlists->cntntsSj}}ëŠ” {{$plant->nongsaro_gardenlists->gardendtl->dlthtsCodeNm}} ë³‘ì¶©í•´ë¥¼ ì¡°ì‹¬í•´ì•¼ í•©ë‹ˆë‹¤.</h1>
         </div>
         <div>
             <div class="max-w-full mx-auto">
                 <div class="max-w-full mx-auto py-2">
-                    <h2 class="text-2xl font-extrabold text-gray-900 border-t border-gray-200 mt-2 pt-2">ÀÏÀÏ ÀÏÁö</h2>
+                    <h2 class="text-2xl font-extrabold text-gray-900 border-t border-gray-200 mt-2 pt-2">ì¼ì¼ ì¼ì§€</h2>
                     <div class="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-4">
 
                         @foreach($files as $file)
@@ -33,8 +33,8 @@
                         </h3>
                         @if(isset(json_decode(file_get_contents(env('AWS_CLOUDFRONT_S3_URL').substr($file->path, 0, strpos($file->path, explode("/", $file->type)[1])-1)."_airesult_json.json", true))["result"]))
                             <p class="text-base font-semibold text-gray-900">{{json_decode(file_get_contents(env('AWS_CLOUDFRONT_S3_URL').substr($file->path, 0, strpos($file->path, explode("/", $file->type)[1])-1)."_airesult_json.json", true))["result"]}}</p>
-                        @endif
                         </div>
+                        @endif
                         @endforeach
                     </div>
                     {{$file->link()}}
