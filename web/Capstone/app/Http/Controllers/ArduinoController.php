@@ -561,7 +561,7 @@ class ArduinoController extends Controller
     public function imagePush(Request $fileRequest, $userID)
     {
         $fileRequest->merge(['userID'=>$userID])->validate([
-            'image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+            'image'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:10000',
             'userID'=>'required|numeric',
             'plantID'=>'required|numeric',
             'token'=>'required|string',
